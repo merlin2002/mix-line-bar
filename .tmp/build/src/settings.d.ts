@@ -12,5 +12,6 @@ export declare class myPropertiesSettings {
     theme: string;
     showtoolbox: boolean;
     showlegend: boolean;
+    renderer: string;
     getthemecolor(themename: string): string;
 }

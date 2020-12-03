@@ -58,6 +58,8 @@ export class myPropertiesSettings {
 
   public showlegend:boolean=true;
 
+  public renderer:string="svg";
+  
   getthemecolor(themename: string): string {
     switch (themename) {
       case "infographic":

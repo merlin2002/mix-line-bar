@@ -71,7 +71,7 @@ export class Visual implements IVisual {
         }
 
         this.settings = Visual.parseSettings(options && options.dataViews && options.dataViews[0]);
-        this.target.innerHTML = `<div id='echarts' class='echarts' name='echarts' style='width: 100%;height: 100%;text-align: center;'>自定义视觉对象</div>`;
+        this.target.innerHTML = `<div id='echarts' class='echarts' name='echarts' style='width: 100%;height: 100%;text-align: center;'></div>`;
 
 
 
@@ -136,7 +136,7 @@ export class Visual implements IVisual {
         let colorname = this.settings.myproperties.theme;
         echarts.registerTheme(colorname, JSON.parse(this.settings.myproperties.getthemecolor(colorname)))
 
-        var myChart = ec.init(document.getElementById('echarts'), colorname);
+        var myChart = ec.init(document.getElementById('echarts'), colorname, { renderer: this.settings.myproperties.renderer });
         // const singleDataView: DataViewSingle = dataView.single;
         // const dataViewcategorical:DataViewCategorical=dataView.categorical;
         try {
