@@ -54,6 +54,10 @@ export class myPropertiesSettings {
   // them
   public theme: string = "dark";
 
+  public showtoolbox:boolean=true;
+
+  public showlegend:boolean=true;
+
   getthemecolor(themename: string): string {
     switch (themename) {
       case "infographic":

@@ -45,7 +45,8 @@ import * as echarts from 'echarts';
 import DataViewCategorical = powerbi.DataViewCategorical;
 import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
 import PrimitiveValue = powerbi.PrimitiveValue;
-import { $ } from '../assets/js/jquery-3.3.1.min.js';
+import DataViewValueColumns = powerbi.DataViewValueColumns
+import DataViewValueColumn = powerbi.DataViewValueColumn
 
 export class Visual implements IVisual {
     private target: HTMLElement;
@@ -80,25 +81,42 @@ export class Visual implements IVisual {
         const categoryFieldIndex = 0;
         const measureFieldIndex = 0;
         let categories: PrimitiveValue[] = categoricalDataView.categories[categoryFieldIndex].values;
-        let values: DataViewValueColumnGroup[] = categoricalDataView.values.grouped();
+        let values: DataViewValueColumns = categoricalDataView.values;
 
-        let data = [];
-        let legend = []
+        let data_col = [];
+        let data_line = [];
+        let legend_col = [];
+        let legend_line = [];
 
-        values.map((years: DataViewValueColumnGroup) => {
-            let group_values = [];
-            categories.map((category: PrimitiveValue, categoryIndex: number) => {
-                group_values.push(years.values[measureFieldIndex].values[categoryIndex])
-                if (!legend.includes(years.name.toString())) {
-                    legend.push(years.name)
+        values.map((years: DataViewValueColumn, index) => {
+            let _val = [];
+            if (years.source.format == "0.00%;-0.00%;0.00%") {
+                years.values.forEach(element => {
+                    _val.push(Number(element) * 100).toFixed(2);
+                });
+            }
+            else {
+                _val = years.values;
+            }
+            if (years.source.roles.measure_bar) {
+                data_col.push(_val)
+                if (!legend_col.includes(years.source.displayName.toString())) {
+                    legend_col.push(years.source.displayName)
                 }
-            });
-            data.push(group_values);
+            }
+
+            if (years.source.roles.measure_line) {
+                data_line.push(_val)
+                if (!legend_line.includes(years.source.displayName.toString())) {
+                    legend_line.push(years.source.displayName)
+                }
+            }
+
         });
 
         // this.target.innerText = JSON.stringify(data, null, 6);
-        console.log(data);
-
+        console.log(data_col);
+        console.log(data_line);
         //绘制图表
         const ec = echarts as any;
         // try{
@@ -134,6 +152,7 @@ export class Visual implements IVisual {
                         }
                     },
                     toolbox: {
+                        show: this.settings.myproperties.showtoolbox,
                         feature: {
                             dataView: { show: true, readOnly: false },
                             magicType: { show: true, type: ['line', 'bar'] },
@@ -142,7 +161,8 @@ export class Visual implements IVisual {
                         }
                     },
                     legend: {
-                        data:legend
+                        show: this.settings.myproperties.showlegend,
+                        data: legend_col.concat(legend_line)
                     },
                     xAxis: [
                         {
@@ -156,37 +176,52 @@ export class Visual implements IVisual {
                     yAxis: [
                         {
                             type: 'value',
-                            name: '水量',
+                            // name: '水量',
                             // min: 0,
                             // max: 250,
                             // interval: 50,
-                            axisLabel: {
-                                formatter: '{value} ml'
-                            }
+                            // axisLabel: {
+                            //     formatter: '{value} ml'
+                            // }
                         },
                         {
                             type: 'value',
-                            name: '温度',
+                            // name: '温度',
                             // min: 0,
-                            // max: 25,
+                            // max: 1,
                             // interval: 5,
                             axisLabel: {
-                                formatter: '{value} °C'
+                                formatter: '{value}%'
                             }
                         }
                     ],
                     series: function () {
                         let series = [];
-                        data.forEach((element, index) => {
+                        data_col.forEach((element, index) => {
                             series.push(
                                 {
                                     data: element,
-                                    type: index==2 ? "line":"bar",
-                                    label: {
-                                        show: true,
-                                        position: 'inside'
-                                    },
-                                    name: legend[index],
+                                    type: "bar",
+                                    // label: {
+                                    //     show: true,
+                                    //     position: 'inside'
+                                    // },
+                                    name: legend_col[index],
+                                }
+                            )
+                        });
+
+                        data_line.forEach((element, index) => {
+                            series.push(
+                                {
+                                    data: element,
+                                    type: "line",
+                                    // label: {
+                                    //     show: true,
+                                    //     position: 'inside'
+                                    // },
+                                    yAxisIndex: 1,
+                                    name: legend_line[index],
                                 }
                             )
                         });

@@ -5,9 +5,9 @@ import VisualConstructorOptions = powerbiVisualsApi.extensibility.visual.VisualC
 var powerbiKey: any = "powerbi";
 var powerbi: any = window[powerbiKey];
 
-var circleCard91275C762EF847969B236C51745DEF81_DEBUG: IVisualPlugin = {
-    name: 'circleCard91275C762EF847969B236C51745DEF81_DEBUG',
-    displayName: 'CircleCard',
+var mixlinebar91275C762EF847969B236C51745DEF81: IVisualPlugin = {
+    name: 'mixlinebar91275C762EF847969B236C51745DEF81',
+    displayName: 'mixlinebar',
     class: 'Visual',
     apiVersion: '2.6.0',
     create: (options: VisualConstructorOptions) => {
@@ -23,7 +23,7 @@ var circleCard91275C762EF847969B236C51745DEF81_DEBUG: IVisualPlugin = {
 if (typeof powerbi !== "undefined") {
     powerbi.visuals = powerbi.visuals || {};
     powerbi.visuals.plugins = powerbi.visuals.plugins || {};
-    powerbi.visuals.plugins["circleCard91275C762EF847969B236C51745DEF81_DEBUG"] = circleCard91275C762EF847969B236C51745DEF81_DEBUG;
+    powerbi.visuals.plugins["mixlinebar91275C762EF847969B236C51745DEF81"] = mixlinebar91275C762EF847969B236C51745DEF81;
 }
 
-export default circleCard91275C762EF847969B236C51745DEF81_DEBUG;
+export default mixlinebar91275C762EF847969B236C51745DEF81;

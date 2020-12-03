@@ -6,14 +6,14 @@
             "kind": "Grouping"
         },
         {
-            "displayName": "值",
-            "name": "measure",
+            "displayName": "列值",
+            "name": "measure_bar",
             "kind": "Measure"
         },
         {
-            "displayName": "图列",
-            "name": "series",
-            "kind": "Grouping"
+            "displayName": "行值",
+            "name": "measure_line",
+            "kind": "Measure"
         }
     ],
     "drilldown": {
@@ -81,6 +81,18 @@
                         ]
                     }
                 },
+                "showtoolbox":{
+                    "displayName": "显示工具条",
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "showlegend":{
+                    "displayName": "显示图例",
+                    "type": {
+                        "bool": true
+                    }
+                },
                 "showAllDataPoints": {
                     "displayName": "Show all",
                     "type": {
@@ -123,12 +135,12 @@
                     }
                 },
                 {
-                    "measure": {
+                    "measure_bar": {
                         "max": 3
                     }
                 },
                 {
-                    "series": {
+                    "measure_line": {
                         "max": 1
                     }
                 }
@@ -140,16 +152,18 @@
                     }
                 },
                 "values": {
-                    "group": {
-                        "by": "series",
-                        "select": [
-                            {
-                                "for": {
-                                    "in": "measure"
-                                }
+                    "select": [
+                        {
+                            "for": {
+                                "in": "measure_bar"
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "for": {
+                                "in": "measure_line"
+                            }
+                        }
+                    ]
                 }
             }
         }

@@ -10,5 +10,7 @@ export declare class myPropertiesSettings {
     fillRule: string;
     fontSize: number;
     theme: string;
+    showtoolbox: boolean;
+    showlegend: boolean;
     getthemecolor(themename: string): string;
 }
