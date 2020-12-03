@@ -148,7 +148,7 @@ export class Visual implements IVisual {
                             type: 'cross',
                             crossStyle: {
                                 color: '#999'
-                            }
+                            },
                         }
                     },
                     toolbox: {
@@ -207,6 +207,9 @@ export class Visual implements IVisual {
                                     //     position: 'inside'
                                     // },
                                     name: legend_col[index],
+                                    emphasis: {
+                                        focus: 'series'
+                                    }
                                 }
                             )
                         });
