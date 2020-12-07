@@ -52,13 +52,15 @@ export class myPropertiesSettings {
   // Text Size
   public fontSize: number = 12;
   // them
-  public theme: string = "dark";
+  public theme: string = "default";
 
   public showtoolbox:boolean=true;
 
   public showlegend:boolean=true;
 
   public renderer:string="svg";
+
+  public showlable:boolean=true;
   
   getthemecolor(themename: string): string {
     switch (themename) {
