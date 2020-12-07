@@ -47,6 +47,7 @@ import DataViewValueColumnGroup = powerbi.DataViewValueColumnGroup;
 import PrimitiveValue = powerbi.PrimitiveValue;
 import DataViewValueColumns = powerbi.DataViewValueColumns
 import DataViewValueColumn = powerbi.DataViewValueColumn
+import { thresholdFreedmanDiaconis } from "d3";
 
 export class Visual implements IVisual {
     private target: HTMLElement;
@@ -134,11 +135,17 @@ export class Visual implements IVisual {
         //     }
 
         let colorname = this.settings.myproperties.theme;
-        echarts.registerTheme(colorname, JSON.parse(this.settings.myproperties.getthemecolor(colorname)))
+        if (colorname != "default") {
+            echarts.registerTheme(colorname, JSON.parse(this.settings.myproperties.getthemecolor(colorname)))
+        }
 
-        var myChart = ec.init(document.getElementById('echarts'), colorname, { renderer: this.settings.myproperties.renderer });
+        var myChart = ec.init(document.getElementById('echarts'), colorname == "default" ? null : colorname, { renderer: this.settings.myproperties.renderer });
         // const singleDataView: DataViewSingle = dataView.single;
         // const dataViewcategorical:DataViewCategorical=dataView.categorical;
+        let showlegend:boolean=this.settings.myproperties.showlegend;
+        let showlable:boolean=this.settings.myproperties.showlable;
+        let lableposition:string=this.settings.myproperties.lableposition;
+
         try {
             myChart.setOption(
                 {
@@ -161,7 +168,7 @@ export class Visual implements IVisual {
                         }
                     },
                     legend: {
-                        show: this.settings.myproperties.showlegend,
+                        show: showlegend,
                         data: legend_col.concat(legend_line)
                     },
                     xAxis: [
@@ -202,10 +209,10 @@ export class Visual implements IVisual {
                                 {
                                     data: element,
                                     type: "bar",
-                                    // label: {
-                                    //     show: true,
-                                    //     position: 'inside'
-                                    // },
+                                    label: {
+                                        show: showlable,
+                                        position: lableposition
+                                    },
                                     name: legend_col[index],
                                     emphasis: {
                                         focus: 'series'
@@ -219,10 +226,10 @@ export class Visual implements IVisual {
                                 {
                                     data: element,
                                     type: "line",
-                                    // label: {
-                                    //     show: true,
-                                    //     position: 'inside'
-                                    // },
+                                    label: {
+                                        show: showlable,
+                                        position: lableposition
+                                    },
                                     yAxisIndex: 1,
                                     name: legend_line[index],
                                 }
