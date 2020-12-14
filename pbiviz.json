@@ -1,7 +1,7 @@
 {
     "visual": {
         "name": "mixlinebar",
-        "displayName": "mixlinebar",
+        "displayName": "双Y轴柱状图",
         "guid": "mixlinebar91275C762EF847969B236C51745DEF81",
         "visualClassName": "Visual",
         "version": "1.0.0",

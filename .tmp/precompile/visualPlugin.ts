@@ -7,7 +7,7 @@ var powerbi: any = window[powerbiKey];
 
 var mixlinebar91275C762EF847969B236C51745DEF81: IVisualPlugin = {
     name: 'mixlinebar91275C762EF847969B236C51745DEF81',
-    displayName: 'mixlinebar',
+    displayName: '双Y轴柱状图',
     class: 'Visual',
     apiVersion: '2.6.0',
     create: (options: VisualConstructorOptions) => {
